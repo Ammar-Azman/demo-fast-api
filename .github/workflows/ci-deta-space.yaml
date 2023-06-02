@@ -14,15 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configure Deta-Space credential 
+      - name: Configure Deta-Space credential and Push
         uses: neobrains/space-deployment-github-action@v0.5
         with:
           access_token: ${{ secrets.DETA_SPACE_TOKEN }}
           project_id: ${{ secrets.PROJECT_ID }}
-      - name: Space Push
-        run: |
-          space push
-          
+          space_push: True
 
 
 
