@@ -5,4 +5,4 @@
 ## Details
 * API deployed at [Deta-Space](https://deta.space/) ⛅
 * CI/CD source: [ci-cd-yaml](https://github.com/marketplace/actions/deta-space-deployment-github-action?version=v0.5)
-* Play with my API [here](https://demofastapiv2-1-e5429087.deta.app/docs#/)! 😁
+* Play with my API [here](https://simpledbapi-1-p0090803.deta.app/docs)! 😁
