@@ -18,7 +18,7 @@ jobs:
         uses: neobrains/space-deployment-github-action@v0.5
         with:
           access_token: ${{ secrets.DETA_SPACE_TOKEN }}
-          project_id: ${{ secrets.DETA_SPACE_PROJECT_ID }}
+          project_id: ${{ secrets.PROJECT_ID }}
           space_push: true
           
 
