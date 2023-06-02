@@ -37,18 +37,18 @@ def add_new_user(new_user:str,
                                     Body(examples={   
                                         "test":{
                                             "summary":"example 1", 
-                                            "description":"exaample Madey", 
+                                            "description":"Simple Example 1", 
                                             "value":{
-                                            "fullname":"Madey", 
+                                            "fullname":"Jackie", 
                                             "age": 99, 
                                             "job": "gg"
                                             }
                                         }, 
                                         "test 2":{
                                             "summary":"example 2", 
-                                            "description":"example Paklah", 
+                                            "description":"Simple Example 2", 
                                             "value":{
-                                            "fullname":"Pak Lah", 
+                                            "fullname":"Karen", 
                                             "age": 45, 
                                             "job": "haha"
                                             }
