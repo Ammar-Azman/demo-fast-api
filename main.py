@@ -13,7 +13,7 @@ def root():
         "Health test":"Good!"
     }
 
-@app.get("/user/{info}")
+@app.get("/user/{userType}")
 def get_user(userType:UserType):
     if userType is userType.user:
         return {"normal_user":userType.user}
@@ -22,7 +22,7 @@ def get_user(userType:UserType):
     elif userType is userType.mainUser:
         return {"main_user":userType.mainUser}
     
-@app.post("/user/details")
+@app.post("/user")
 def post_user_details(userType:Union[UserType, str]):
     if userType is userType.mainUser:
         return {"status":200, 
