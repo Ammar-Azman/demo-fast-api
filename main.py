@@ -1,11 +1,26 @@
-from fastapi import FastAPI, Query, Body
-from models import UserType, UserDetails
-from db import fakeDB
-from typing_extensions import Annotated
-from typing import Union
+from fastapi import FastAPI
+from routers import users
 
-app = FastAPI()
-db = fakeDB.fake_db
+desc="""
+simple-user-db-API
+## Users
+
+You will be able to 
+* **Create User**
+* **Get all Users**
+* **Delete User**
+* **Update User**
+"""
+app = FastAPI(
+    title="user-db-API", 
+    description=desc,
+    version="0.0.1", 
+    contact={
+        "name":"Ammar-Azman", 
+        "url":"https://github.com/Ammar-Azman"
+    }, 
+)
+app.include_router(users.router)
 
 @app.get("/")
 def root():
@@ -13,67 +28,3 @@ def root():
         "Health":"Good!", 
         "CI/CD":"Succed!"
     }
-
-@app.get("/user/{userType}")
-def get_user(userType:UserType):
-    if userType is userType.user:
-        return {"normal_user":userType.user}
-    elif userType is userType.superUser:
-        return {"super_user":userType.superUser}
-    elif userType is userType.mainUser:
-        return {"main_user":userType.mainUser}
-    
-@app.post("/user")
-def post_user_details(userType:Union[UserType, str]):
-    if userType is userType.mainUser:
-        return {"status":200, 
-                "mainUser information":db["col1"]}
-    else:
-        return {"status":400, 
-                "message":"Cannot see other information than main user"}
-    
-@app.post("/user/{col}")
-def add_new_user(new_user:str,
-                new_info:Annotated[UserDetails, 
-                                    Body(examples={   
-                                        "test":{
-                                            "summary":"example 1", 
-                                            "description":"Simple Example 1", 
-                                            "value":{
-                                            "fullname":"Jackie", 
-                                            "age": 99, 
-                                            "job": "gg"
-                                            }
-                                        }, 
-                                        "test 2":{
-                                            "summary":"example 2", 
-                                            "description":"Simple Example 2", 
-                                            "value":{
-                                            "fullname":"Karen", 
-                                            "age": 45, 
-                                            "job": "haha"
-                                            }
-                                        }
-                                    })]):
-    
-    db[new_user]= new_info.dict()
-    return db
-
-@app.put("/user/{col}")
-def update_user(user_name:str, 
-            update_info:UserDetails):
-
-    db.update({
-        user_name: update_info.dict()
-    })
-    return db
-
-@app.delete("/user")
-def delete_user(username:str):
-    del db[username]
-    return db
-
-
-@app.get("/user")
-async def get_all_user():
-    return db
