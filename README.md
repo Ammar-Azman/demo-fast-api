@@ -1,4 +1,7 @@
 # demo-fast-api
-* Playground of FastAPI
-* Deployed on https://deta.space/
-* API Docs: https://demofastapiv2-1-e5429087.deta.app/docs#/
+
+* Just a fun project to explore FastAPI!
+
+## Details
+* API deployed at [Deta-Space](https://deta.space/) ⛅
+* Play with my API [here](https://demofastapiv2-1-e5429087.deta.app/docs#/)! 🤪
