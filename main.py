@@ -10,7 +10,8 @@ db = fakeDB.fake_db
 @app.get("/")
 def root():
     return {
-        "Health test":"Good!"
+        "Health":"Good!", 
+        "CI/CD":"Succed!"
     }
 
 @app.get("/user/{userType}")
