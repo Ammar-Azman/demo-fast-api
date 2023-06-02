@@ -10,7 +10,7 @@ class UserType(str, Enum):
     superUser:str="joe"
 
 class UserDetails(BaseModel):
-    fullname: Annotated[str, Query(max_length=100)]
+    fullname: Annotated[str, Query(max_length=10)]
     age: Annotated[int, Query(ge=18)]
     job: Annotated[str, Query(max_length=20)]
     
