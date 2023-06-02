@@ -19,7 +19,7 @@ jobs:
         with:
           access_token: ${{ secrets.DETA_SPACE_TOKEN }}
           project_id: ${{ secrets.PROJECT_ID }}
-          space_push: True
+          space_push: true
 
 
 
