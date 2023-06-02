@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query, Body
 from models import UserType, UserDetails
 from db import fakeDB
 from typing_extensions import Annotated
@@ -30,3 +30,29 @@ def post_user_details(userType:Union[UserType, str]):
     else:
         return {"status":400, 
                 "message":"Cannot see other information than main user"}
+    
+@app.post("/user/{col}")
+def add_new_user(new_user:str,
+                new_info:UserDetails):
+    
+    db[new_user]= new_info.dict()
+    return db
+
+@app.put("/user/{col}")
+def update_user(user_name:str, 
+            update_info:UserDetails):
+
+    db.update({
+        user_name: update_info.dict()
+    })
+    return db
+
+@app.delete("/user")
+def delete_user(username:str):
+    del db[username]
+    return db
+
+
+@app.get("/user")
+async def get_all_user():
+    return db
