@@ -3,5 +3,25 @@ on:
   push:
     branches:
       - main
-      - stage
-      - dev
+
+jobs:
+  deploy:
+    name: Deploy 
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure Deta-Space credential 
+        uses: neobrains/space-deployment-github-action@0.1
+        with:
+          access_token: ${{ secrets.DETA_SPACE_TOKEN }}
+          project_id: ${{ secrets.DETA_SPACE_PROJECT_ID }}
+          space_push: true
+          
+
+
+
+
