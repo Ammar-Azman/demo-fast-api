@@ -1,9 +1,9 @@
 
 class fakeDB:
     fake_db = {
-        "col1":{
-                "usertype":"main", 
+            "mat":{
+                "fullname":"Mat Toha", 
                 "age": 21, 
                 "job": "Hacker"
-        }
+                }
     }
