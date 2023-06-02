@@ -33,7 +33,27 @@ def post_user_details(userType:Union[UserType, str]):
     
 @app.post("/user/{col}")
 def add_new_user(new_user:str,
-                new_info:UserDetails):
+                new_info:Annotated[UserDetails, 
+                                    Body(examples={   
+                                        "test":{
+                                            "summary":"example 1", 
+                                            "description":"exaample Madey", 
+                                            "value":{
+                                            "fullname":"Madey", 
+                                            "age": 99, 
+                                            "job": "gg"
+                                            }
+                                        }, 
+                                        "test 2":{
+                                            "summary":"example 2", 
+                                            "description":"example Paklah", 
+                                            "value":{
+                                            "fullname":"Pak Lah", 
+                                            "age": 45, 
+                                            "job": "haha"
+                                            }
+                                        }
+                                    })]):
     
     db[new_user]= new_info.dict()
     return db
