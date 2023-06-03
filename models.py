@@ -19,9 +19,10 @@ class UserDetails(BaseModel):
         schema_extra = {"fullname": "Leya", "age": 21, "job": "tko"}
 
 
+##### FILTERING METHOD 1 ###
 class UserInput(BaseModel):
     username: Annotated[str, Query(min_length=5, max_length=10)] = "Bryan"
-    password: Annotated[str, Query(min_length=5, max_length=10)] = "pasw!023"
+    password: Annotated[str, Query(min_length=5, max_length=10)] = "dasd!982"
     fullname: Union[str, None] = None
 
 
@@ -32,3 +33,14 @@ class UserOutput(BaseModel):
 
     username: Annotated[str, Query(min_length=5, max_length=10)]
     fullname: Union[str, None] = None
+
+
+#### FILTERING METHOD 2 ####
+
+
+class BaseInfo(BaseModel):
+    username: str
+
+
+class CredentialInfo(BaseInfo):
+    password: str
