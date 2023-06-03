@@ -6,4 +6,7 @@ router = APIRouter(prefix="/upload", tags=["upload"])
 
 @router.post("/file")
 async def upload_file(file: UploadFile):
-    return {"filename": file.filename}
+    return {
+        "filename": file.filename,
+        "content-type": file.content_type,
+    }
