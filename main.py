@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header
+from fastapi.responses import JSONResponse
 from routers import users
 
 desc="""
@@ -28,3 +29,15 @@ def root():
         "Health":"Good!", 
         "CI/CD":"Succed!"
     }
+
+@app.get("/header")
+def read_header(user_agent=Header(None)):
+    """
+    NOTE: Not understand about 
+    why it supposed to be underscore 
+    instead of hypen
+    """
+    print(user_agent)
+    content = {"message":"hello-world!"}
+    return {"content":content, 
+        "User-Agent":user_agent}
