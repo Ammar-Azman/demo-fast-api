@@ -4,7 +4,7 @@ from fastapi import Query
 from enum import Enum
 
 
-class UserType(str, Enum):
+class UserName(str, Enum):
     user:str= "ammar"
     mainUser:str="sara"
     superUser:str="joe"

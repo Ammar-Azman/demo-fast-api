@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query, Body
-from models import UserType, UserDetails
+from models import UserName, UserDetails
 from db import fakeDB
-from typing import Union
+from typing import Union, Dict
 from typing_extensions import Annotated
 
 db = fakeDB.fake_db
@@ -11,25 +11,41 @@ router = APIRouter(
 )
 
 
-@router.get("/{userType}")
-def get_user(userType:UserType):
-    if userType is userType.user:
-        return {"normal_user":userType.user}
-    elif userType is userType.superUser:
-        return {"super_user":userType.superUser}
-    elif userType is userType.mainUser:
-        return {"main_user":userType.mainUser}
+@router.get("/{user_name}")
+def get_type_user(user_name:UserName)-> Dict[str, str]:
+    """
+    Endpoint return the type of user 
+    based on their name\n
+
+    Args:\n
+    * user_name: Username that you want to see their type user
+    
+    """
+
+    if user_name is user_name.user:
+        return {f"{user_name.user}":"Normal user"}
+    elif user_name is user_name.superUser:
+        return {f"{user_name.superUser}":"Super user"}
+    elif user_name is user_name.mainUser:
+        return {f"{user_name.mainUser}":"Main user"}
     
 @router.post("/")
-def post_user_details(userType:Union[UserType, str]):
-    if userType is userType.mainUser:
+def post_user_details(user_name:UserName):
+    """
+    Endpoint only return Main User information only.\n
+
+    Args:\n
+    * user_name: sara (default)
+    
+    """
+    if user_name is user_name.mainUser:
         return {"status":200, 
-                "mainUser information":db["col1"]}
+                "mainUser information":db['sara']}
     else:
         return {"status":400, 
                 "message":"Cannot see other information than main user"}
     
-@router.post("/{col}")
+@router.post("/{user_name}")
 def add_new_user(new_user:str,
                 new_info:Annotated[UserDetails, 
                                     Body(examples={   
@@ -51,14 +67,26 @@ def add_new_user(new_user:str,
                                             "job": "haha"
                                             }
                                         }
-                                    })]):
+                                    })])-> Dict[str, Dict[str, str]]:
+    """
+    Endpoint used to add new user.\n
+    Args:\n
+    * new_user: New username 
+    * new_info: New information for the new user
+    """
     
     db[new_user]= new_info.dict()
     return db
 
-@router.put("/{col}")
+@router.put("/{user_name}")
 def update_user(user_name:str, 
-            update_info:UserDetails):
+            update_info:UserDetails)-> Dict[str, Dict[str, str]]:
+    """
+    Endpoint used to update the information that has been posted. \n
+    Args:
+    * user_name: User that you want to update
+    * update_info: User information (request body)
+    """
 
     db.update({
         user_name: update_info.dict()
@@ -66,11 +94,20 @@ def update_user(user_name:str,
     return db
 
 @router.delete("/")
-def delete_user(username:str):
+def delete_user(username:str)-> Dict[str, Dict[str, str]]:
+    """
+    Endpoint used to delete user name. 
+    Args:
+        * username: name of the user you want to delete
+    
+    """
     del db[username]
     return db
 
 
 @router.get("/")
-async def get_all_user():
+async def get_all_user()->Dict[str, Dict[str, str]]:
+    """
+    Endpoint executed to return all user information.
+    """
     return db
