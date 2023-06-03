@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Header
 from fastapi.responses import JSONResponse
-from routers import users, login
+from routers import users, login, upload
 
 desc = """
 simple-user-db-API
@@ -20,6 +20,7 @@ app = FastAPI(
 )
 app.include_router(users.router)
 app.include_router(login.router)
+app.include_router(upload.router)
 
 
 @app.get("/")

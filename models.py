@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Union, Annotated
-from fastapi import Query
+from fastapi import Query, Form
 from enum import Enum
 
 
@@ -39,7 +39,7 @@ class UserOutput(BaseModel):
 
 
 class BaseInfo(BaseModel):
-    username: str
+    username: Annotated[str, Form()]
 
 
 class CredentialInfo(BaseInfo):
