@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Header
+from fastapi import FastAPI, Header, Request, status
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from routers import users, login, upload
 
 desc = """
@@ -21,6 +23,15 @@ app = FastAPI(
 app.include_router(users.router)
 app.include_router(login.router)
 app.include_router(upload.router)
+
+
+# override error handling
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+    )
 
 
 @app.get("/")
