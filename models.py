@@ -19,6 +19,16 @@ class UserDetails(BaseModel):
         schema_extra = {"fullname": "Leya", "age": 21, "job": "tko"}
 
 
+class UserInCompany(BaseModel):
+    username: str
+    age: int
+    job: str
+
+
+class UserInSystem(UserInCompany):
+    hashed_password: str
+
+
 ##### FILTERING METHOD 1 ###
 class UserInput(BaseModel):
     username: Annotated[str, Query(min_length=5, max_length=10)] = "Bryan"

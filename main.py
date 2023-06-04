@@ -2,7 +2,7 @@ from fastapi import FastAPI, Header, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
-from routers import users, login, upload
+from routers import users, login, upload, security
 from pathlib import Path
 
 desc = """
@@ -37,6 +37,7 @@ app = FastAPI(
 app.include_router(users.router)
 app.include_router(login.router)
 app.include_router(upload.router)
+app.include_router(security.router)
 
 
 # override error handling
