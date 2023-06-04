@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from routers import users, login, upload
+from pathlib import Path
 
 desc = """
 simple-user-db-API
@@ -14,8 +15,21 @@ You will be able to
 * **Delete User**
 * **Update User**
 """
+
+
+def get_active_branch_name():
+    head_dir = Path(".") / ".git" / "HEAD"
+    with head_dir.open("r") as f:
+        content = f.read().splitlines()
+
+    for line in content:
+        if line[0:4] == "ref:":
+            return line.partition("refs/heads/")[2]
+
+
+git_branch = get_active_branch_name()
 app = FastAPI(
-    title="user-db-API",
+    title=f"user-db-API-{git_branch}",
     description=desc,
     version="0.0.1",
     contact={"name": "Ammar-Azman", "url": "https://github.com/Ammar-Azman"},
