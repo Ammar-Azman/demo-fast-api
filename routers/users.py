@@ -1,15 +1,23 @@
-from fastapi import APIRouter, Query, Body, status
+from fastapi import APIRouter, Body, status, Depends
 from models import UserName, UserDetails
 from db import fakeDB
-from typing import Union, Dict
+from typing import Dict
 from typing_extensions import Annotated
+from dependencies.users_dep import (
+    choose_user,
+    sara_only,
+    update_user,
+    add_user,
+    delete_user,
+    get_all_user_,
+)
 
 db = fakeDB.fake_db
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("/{user_name}", status_code=status.HTTP_200_OK)
-def get_type_user(user_name: UserName) -> Dict[str, str]:
+@router.get("/{data}", status_code=status.HTTP_200_OK)
+def get_type_user(data: Annotated[UserName, Depends(choose_user)]) -> Dict[str, str]:
     """
     Endpoint return the type of user
     based on their name\n
@@ -18,17 +26,11 @@ def get_type_user(user_name: UserName) -> Dict[str, str]:
     * user_name: Username that you want to see their type user
 
     """
-
-    if user_name is user_name.user:
-        return {f"{user_name.user}": "Normal user"}
-    elif user_name is user_name.superUser:
-        return {f"{user_name.superUser}": "Super user"}
-    elif user_name is user_name.mainUser:
-        return {f"{user_name.mainUser}": "Main user"}
+    return data
 
 
-@router.get("/{user_name}/details", status_code=status.HTTP_200_OK)
-def get_user_details(user_name: UserName):
+@router.get("/{data}/details", status_code=status.HTTP_200_OK)
+def get_user_details(data: Annotated[dict, Depends(sara_only)]):
     """
     Endpoint only return Main User information only.\n
 
@@ -36,32 +38,12 @@ def get_user_details(user_name: UserName):
     * user_name: sara (default)
 
     """
-    if user_name is user_name.mainUser:
-        return {"status": 200, "mainUser information": db["sara"]}
-    else:
-        return {"status": 400, "message": "Cannot see other information than main user"}
+    return data
 
 
-@router.post("/{user_name}", status_code=status.HTTP_201_CREATED)
+@router.post("/{data}", status_code=status.HTTP_201_CREATED)
 def add_new_user(
-    new_user: str,
-    new_info: Annotated[
-        UserDetails,
-        Body(
-            examples={
-                "test": {
-                    "summary": "example 1",
-                    "description": "Simple Example 1",
-                    "value": {"fullname": "Jackie", "age": 99, "job": "gg"},
-                },
-                "test 2": {
-                    "summary": "example 2",
-                    "description": "Simple Example 2",
-                    "value": {"fullname": "Karen", "age": 45, "job": "haha"},
-                },
-            }
-        ),
-    ],
+    data: Annotated[UserName, Depends(add_user)]
 ) -> Dict[str, Dict[str, str]]:
     """
     Endpoint used to add new user.\n
@@ -69,39 +51,39 @@ def add_new_user(
     * new_user: New username
     * new_info: New information for the new user
     """
-
-    db[new_user] = new_info.dict()
-    return db
+    return data
 
 
-@router.put("/{user_name}", status_code=status.HTTP_201_CREATED)
-def update_user(user_name: str, update_info: UserDetails) -> Dict[str, Dict[str, str]]:
+@router.put("/{data}", status_code=status.HTTP_201_CREATED)
+def update_user(
+    data: Annotated[dict, Depends(update_user)]
+) -> Dict[str, Dict[str, str]]:
     """
     Endpoint used to update the information that has been posted. \n
     Args:
     * user_name: User that you want to update
     * update_info: User information (request body)
     """
-
-    db.update({user_name: update_info.dict()})
-    return db
+    return data
 
 
-@router.delete("/{user_name}", status_code=status.HTTP_200_OK)
-def delete_user(user_name: str) -> Dict[str, Dict[str, str]]:
+@router.delete("/{data}", status_code=status.HTTP_200_OK)
+def delete_user(
+    data: Annotated[dict, Depends(delete_user)]
+) -> Dict[str, Dict[str, str]]:
     """
     Endpoint used to delete user name.
     Args:
         * username: name of the user you want to delete
 
     """
-    del db[user_name]
-    return db
+    return data
 
 
-@router.get("/all", status_code=status.HTTP_200_OK)
-async def get_all_user() -> Dict[str, Dict[str, str]]:
+@router.get("/get_all/{data}", status_code=status.HTTP_200_OK)
+async def get_all_user(data: Annotated[dict, Depends(get_all_user_)]):
     """
+    -> Dict[str, Dict[str, str]]
     Endpoint executed to return all user information.
     """
-    return db
+    return data
