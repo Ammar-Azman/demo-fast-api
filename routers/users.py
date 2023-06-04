@@ -81,9 +81,11 @@ def delete_user(
 
 
 @router.get("/get_all/{data}", status_code=status.HTTP_200_OK)
-async def get_all_user(data: Annotated[dict, Depends(get_all_user_)]):
+async def get_all_user(
+    data: Annotated[dict, Depends(get_all_user_)]
+) -> Dict[str, Dict[str, str]]:
     """
-    -> Dict[str, Dict[str, str]]
+
     Endpoint executed to return all user information.
     """
     return data

@@ -3,9 +3,10 @@ class fakeDB:
 
     fake_user_db = {
         "sara": {
-            "username": "Mat Toha",
+            "username": "sara",
             "age": 21,
             "job": "Hacker",
-            "hashed_password": "mashedpotato",
-        }
+            "disabled": False,
+            "hashed_password": "fakehashedpotato",  # password kept in hashed
+        },
     }

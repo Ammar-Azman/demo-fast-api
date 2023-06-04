@@ -23,6 +23,7 @@ class UserInCompany(BaseModel):
     username: str
     age: int
     job: str
+    disabled: Union[bool, None] = None
 
 
 class UserInSystem(UserInCompany):

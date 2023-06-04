@@ -1,9 +1,11 @@
 from models import UserName, UserDetails
 from db import fakeDB
 from typing import Annotated
-from fastapi import Body
+from fastapi import Body, Depends
+from fastapi.security import OAuth2PasswordBearer
 
 db = fakeDB.fake_db
+outh2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 async def choose_user(user_name: UserName):
@@ -57,5 +59,5 @@ async def delete_user(user_name):
     return db
 
 
-async def get_all_user_():
+async def get_all_user_(test: Annotated[str, Depends(outh2_scheme)]):
     return db
