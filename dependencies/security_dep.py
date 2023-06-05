@@ -11,6 +11,8 @@ from config.security_conf import TokenConfig
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# NOTE: "token" is used as it become the url path operation, the endpoint must use "token" to setup the OAuth2
+# if the tokenUrl="yahoo", hence the endpoint that reponsible for Authorization must use "/yahoo" too
 db_user = fakeDB.fake_user_db
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
