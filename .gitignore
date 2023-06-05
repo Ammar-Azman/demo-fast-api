@@ -162,4 +162,4 @@ cython_debug/
 .space
 
 # Background task ignore
-noti.txt
+*noti.txt
