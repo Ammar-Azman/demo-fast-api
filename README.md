@@ -5,7 +5,7 @@
 ## Details
 * API deployed at [Deta-Space](https://deta.space/) ⛅
 * CI/CD source: [ci-cd-yaml](https://github.com/marketplace/actions/deta-space-deployment-github-action?version=v0.5)
-* Play with my API [here](https://simpledbapi-1-p0090803.deta.app/docs)! 😁
+* Check out my API progress [here](https://simpledbapi-1-p0090803.deta.app/docs)! 😁
 
 ## TODO
 * [ ] Deployment for `dev` and `stage`
