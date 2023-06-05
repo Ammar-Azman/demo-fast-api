@@ -7,6 +7,13 @@ class fakeDB:
             "age": 21,
             "job": "Hacker",
             "disabled": False,
-            "hashed_password": "fakehashedpotato",  # password kept in hashed
+            "hashed_password": "$2y$04$AOvE.7a7e2IJuyEs.ZKWse7/ah42CcymokeFRGfwlpfbAvfb.Dh4q",  # hashed (potato)
+        },
+        "johndoe": {
+            "username": "johndoe",
+            "age": 21,
+            "job": "Hacker",
+            "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+            "disabled": False,
         },
     }
