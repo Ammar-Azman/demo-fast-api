@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.encoders import jsonable_encoder
 from routers import users, login, upload, security, background
-from pathlib import Path
+import uvicorn
 
 desc = """
 simple-user-db-API
@@ -65,3 +65,7 @@ def read_header(user_agent=Header(None)):
     print(user_agent)
     content = {"message": "hello-world!"}
     return {"content": content, "User-Agent": user_agent}
+
+
+if __name__ == "__name__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
