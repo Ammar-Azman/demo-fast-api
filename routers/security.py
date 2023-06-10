@@ -28,7 +28,11 @@ async def read_user_me(
 @router.post("/")
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     """
-    # OLDER VERSION
+    By login, a token is generated to limit the time of the login.
+    The token also can be used like usually be used by Azure and AWS.
+    The token can be used as the SDK of the app so we can used their API.
+
+    \f # OLDER VERSION
     user_dict = db_user.get(form_data.username)  # retrieved from database
     if not user_dict:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
@@ -41,6 +45,7 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if not hashed_password == user.hashed_password:
         raise HTTPException(status_code=400, details="Incorrect username or password")
     """
+
     # NOTE: Validation occured here where hashed_pwd from database is compare
     # with input password from user that will be hashed
     # hashed(user_pwd) == hashed_pwd_db
