@@ -30,6 +30,7 @@ You will be able to
 
 app = FastAPI(
     title="user-db-API",
+    root_path="/",
     description=desc,
     version="0.0.1",
     contact={"name": "Ammar-Azman", "url": "https://github.com/Ammar-Azman"},
@@ -51,8 +52,20 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 @app.get("/")
-def root():
-    return {"Health": "Good!", "CI/CD": "Succed!"}
+def root(request: Request):
+    return {
+        "root_path": request.scope.get("root_path"),
+        "Health": "Good!",
+        "CI/CD": "Succed!",
+    }
+
+
+@app.get("/host")
+def get_host(request: Request):
+    return {
+        "client": request.client,
+        "host": request.client.host,
+    }
 
 
 @app.get("/header")
@@ -61,11 +74,24 @@ def read_header(user_agent=Header(None)):
     NOTE: Not understand about
     why it supposed to be underscore
     instead of hypen
+    NOTE: Now undestand -- the query parameter to get the user agent
+    is not customizable. it has been decided to be `user_agent` and not
+    others. if you change it to other param name, it will failed
+    to extract the user agent from the header
     """
-    print(user_agent)
     content = {"message": "hello-world!"}
     return {"content": content, "User-Agent": user_agent}
 
+
+subapp = FastAPI()
+
+
+@subapp.get("/sub")
+def hello():
+    return {"message": "hello sub!"}
+
+
+app.mount("/subapi", subapp)
 
 if __name__ == "__name__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
